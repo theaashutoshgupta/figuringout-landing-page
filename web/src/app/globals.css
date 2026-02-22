@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --font-poppins: "Poppins", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+@theme {
+  --color-rich-black: #0B0B0D;
+  --color-charcoal: #16181D;
+  --color-graphite: #1F2228;
+  --color-dark-steel: #2A2E35;
+  --color-fo-yellow: #FFC700;
+  --color-bright-gold: #FFD84D;
+  --color-burnished-gold: #E6B200;
+  --color-soft-white: #F5F5F5;
+  --color-cool-gray: #B3B8C5;
+  --color-slate-gray: #7A818F;
+  --color-off-white: #F7F8FA;
+  --color-emerald: #2FBF71;
+  --color-amber: #F4A300;
+  --color-deep-orange: #D6452D;
+  --color-electric-blue: #3A86FF;
+
+  --font-poppins: "Poppins", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-rich-black text-soft-white font-inter;
+}
