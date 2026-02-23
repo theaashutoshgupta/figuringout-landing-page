@@ -1,48 +1,73 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function Footer() {
+    const easeOutQuart = [0.165, 0.84, 0.44, 1] as const;
+
+    const columnVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easeOutQuart } }
+    };
+
     return (
-        <footer className="w-full bg-[#111111] text-white pt-20 pb-10">
+        <footer className="w-full bg-[#111111] text-white pt-20 pb-10 overflow-hidden">
             <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
                 {/* Top Section - 5 Columns */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: {
+                                staggerChildren: 0.1,
+                                delayChildren: 0.1,
+                            }
+                        }
+                    }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16"
+                >
                     {/* Column 1 - Brand Info */}
-                    <div className="lg:col-span-1 flex flex-col items-start gap-2">
+                    <motion.div variants={columnVariants} className="lg:col-span-1 flex flex-col items-start gap-2">
                         <div className="flex items-center gap-3">
                             <img src="/logo.ico" alt="Figuring Out Logo" className="w-10 h-10 object-contain invert brightness-0" />
                             <h2 className="text-2xl font-poppins font-bold tracking-widest uppercase">Figuring Out</h2>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Column 2 - Links */}
-                    <div className="flex flex-col gap-3">
+                    <motion.div variants={columnVariants} className="flex flex-col gap-3">
                         <Link href="/podcast" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">PODCAST</Link>
                         <Link href="/search" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">SEARCH</Link>
                         <Link href="/contact" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">GUEST SUGGESTION</Link>
-                    </div>
+                    </motion.div>
 
                     {/* Column 3 - Links */}
-                    <div className="flex flex-col gap-3">
+                    <motion.div variants={columnVariants} className="flex flex-col gap-3">
                         <Link href="/about" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">ABOUT</Link>
                         <Link href="/about#team" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">TEAM</Link>
                         <Link href="/careers" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">CAREERS</Link>
-                    </div>
+                    </motion.div>
 
                     {/* Column 4 - Links */}
-                    <div className="flex flex-col gap-3">
+                    <motion.div variants={columnVariants} className="flex flex-col gap-3">
                         <Link href="/sponsors" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">SPONSORS</Link>
                         <Link href="/faq" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">FAQ</Link>
                         <Link href="/contact" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">CONTACT US</Link>
-                    </div>
+                    </motion.div>
 
                     {/* Column 5 - Links */}
-                    <div className="flex flex-col gap-3">
+                    <motion.div variants={columnVariants} className="flex flex-col gap-3">
                         <Link href="/legal/privacy" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">PRIVACY POLICY</Link>
                         <Link href="/legal/terms" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">TERMS OF SERVICE</Link>
                         <Link href="/legal/cookies" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">COOKIE POLICY</Link>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
 
                 {/* Divider Line */}
                 <div className="w-full h-[1px] bg-white/20 mb-12"></div>

@@ -38,9 +38,14 @@ export default function NavigationHeader() {
         <header className="fixed top-8 left-0 right-0 z-50 flex px-6 md:px-12 pointer-events-none">
             <motion.div
                 layout
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 30,
+                    mass: 0.8
+                }}
                 className={clsx(
-                    "pointer-events-auto relative flex items-center justify-between px-8 py-4 border rounded-full transition-all duration-[600ms] ease-[0.22,1,0.36,1]",
+                    "pointer-events-auto relative flex items-center justify-between px-8 py-4 border rounded-full",
                     isExpanded
                         ? "mx-auto w-full max-w-6xl bg-[#111]/80 backdrop-blur-[40px] border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]"
                         : "mr-auto ml-0 w-auto min-w-max bg-[#111]/30 backdrop-blur-[20px] border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] gap-x-6"
@@ -81,36 +86,6 @@ export default function NavigationHeader() {
                         ))}
                     </nav>
                 </div>
-
-                {/* Right Action Spacer: Guest Suggestion */}
-                <motion.div
-                    layout
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{
-                        opacity: isExpanded ? 1 : 0,
-                        x: isExpanded ? 0 : -20
-                    }}
-                    transition={{ duration: 0.5, ease: "easeOut", delay: isExpanded ? 0.3 : 0 }}
-                    className={clsx(
-                        "flex items-center shrink-0 z-10",
-                        !isExpanded && "absolute pointer-events-none"
-                    )}
-                >
-                    <a
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                        className={clsx(
-                            "text-sm font-medium transition-colors duration-300 relative group whitespace-nowrap",
-                            pathname === "/guest-suggestion" ? "text-fo-yellow" : "text-soft-white/80 hover:text-white"
-                        )}
-                    >
-                        Guest Suggestion
-                        <span className={clsx(
-                            "absolute -bottom-1 left-0 w-0 h-0.5 bg-fo-yellow transition-all duration-300 group-hover:w-full",
-                            pathname === "/guest-suggestion" ? "w-full" : "w-0"
-                        )} />
-                    </a>
-                </motion.div>
             </motion.div>
         </header>
     );

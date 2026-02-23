@@ -32,20 +32,56 @@ export default function FeaturedEpisodes() {
                 refresh
             />
 
-            {/* Header Container */}
-            <div className="w-full max-w-7xl px-6 md:px-12 flex flex-col md:flex-row justify-between items-end mb-16 space-y-6 md:space-y-0 relative z-10">
+            {/* Header Container - Staggered Cinematic Reveal */}
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                        opacity: 1,
+                        transition: {
+                            staggerChildren: 0.15,
+                            delayChildren: 0.2,
+                        }
+                    }
+                }}
+                className="w-full max-w-7xl px-6 md:px-12 flex flex-col md:flex-row justify-between items-end mb-16 space-y-6 md:space-y-0 relative z-10"
+            >
                 <div className="flex flex-col">
-                    <h2 className="font-poppins text-5xl md:text-6xl font-black text-soft-white leading-tight tracking-tight">
-                        Featured
-                    </h2>
-                    <span className="font-playfair text-5xl md:text-6xl font-bold italic text-fo-yellow leading-none -mt-2">
-                        Episodes
-                    </span>
+                    <motion.div
+                        variants={{
+                            hidden: { opacity: 0, y: 40 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
+                        }}
+                        className="overflow-hidden pb-1"
+                    >
+                        <h2 className="font-poppins text-5xl md:text-6xl font-black text-soft-white leading-tight tracking-tight">
+                            Featured
+                        </h2>
+                    </motion.div>
+                    <motion.div
+                        variants={{
+                            hidden: { opacity: 0, y: 40 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
+                        }}
+                    >
+                        <span className="font-playfair text-5xl md:text-6xl font-bold italic text-fo-yellow leading-none -mt-2 block">
+                            Episodes
+                        </span>
+                    </motion.div>
                 </div>
-                <p className="font-inter text-cool-gray text-lg max-w-sm md:text-right">
+                <motion.p
+                    variants={{
+                        hidden: { opacity: 0, x: 20 },
+                        visible: { opacity: 1, x: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
+                    }}
+                    className="font-inter text-cool-gray text-lg max-w-sm md:text-right"
+                >
                     Our most popular podcasts with high profile guests
-                </p>
-            </div>
+                </motion.p>
+            </motion.div>
 
             {/* 3D Curved Carousel Container */}
             <div

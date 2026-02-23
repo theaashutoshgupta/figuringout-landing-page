@@ -12,63 +12,87 @@ export default function BookSection() {
             {/* Contrasting Frosted Right Panel Overlay */}
             <div className="absolute right-0 top-0 bottom-0 w-1/4 lg:w-1/3 bg-white/5 backdrop-blur-2xl border-l border-white/10 rounded-l-[50px] md:rounded-l-[100px] z-0 overflow-hidden hidden md:block">
                 {/* Vertical Text - Solid and Outlined (-rotate-90 for 180 flip from before, flex-col for stacking) */}
-                <div className="absolute inset-y-0 right-10 lg:right-20 flex items-center justify-center">
+                <motion.div
+                    initial={{ y: "-100%", opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 1.5, ease: [0.165, 0.84, 0.44, 1] }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="absolute inset-y-0 right-10 lg:right-20 flex items-center justify-center"
+                >
                     <div className="flex flex-col items-center justify-center whitespace-nowrap -rotate-90 origin-center text-soft-white/10 font-poppins font-black uppercase tracking-wider pointer-events-none">
                         <span className="text-[100px] lg:text-[140px] leading-none mb-2">
                             BUILD
                         </span>
                         <span className="text-[100px] lg:text-[140px] text-transparent leading-none" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.1)' }}>
-                            DON'T TALK
+                            DON&apos;T TALK
                         </span>
                     </div>
-                </div>
+                </motion.div>
             </div>
 
-            <div className="max-w-[1400px] mx-auto px-6 xl:px-0 w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+            <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                        opacity: 1,
+                        transition: {
+                            staggerChildren: 0.15,
+                            delayChildren: 0.2,
+                        }
+                    }
+                }}
+                className="max-w-[1400px] mx-auto px-6 xl:px-0 w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center"
+            >
 
                 {/* Left Content */}
                 <div className="flex flex-col gap-5 max-w-xl">
                     <div className="flex flex-col gap-1">
                         <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            variants={{
+                                hidden: { opacity: 0, y: 20 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
+                            }}
                             className="text-soft-white font-poppins text-[10px] md:text-xs tracking-[0.2em] uppercase font-semibold opacity-80"
                         >
                             IF YOU WASTE ALL YOUR TIME THINKING...
                         </motion.p>
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            viewport={{ once: true }}
-                            className="text-4xl md:text-5xl lg:text-6xl font-poppins font-black text-soft-white leading-[1.05] uppercase tracking-tight drop-shadow-xl"
+                        <motion.div
+                            variants={{
+                                hidden: { opacity: 0, y: 40 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
+                            }}
+                            className="overflow-hidden pb-2"
                         >
-                            WHEN WILL YOU <span className="text-fo-yellow">LIVE?</span>
-                        </motion.h2>
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-poppins font-black text-soft-white leading-[1.05] uppercase tracking-tight drop-shadow-xl">
+                                WHEN WILL YOU <span className="text-fo-yellow">LIVE?</span>
+                            </h2>
+                        </motion.div>
                     </div>
 
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        viewport={{ once: true }}
+                        variants={{
+                            hidden: { opacity: 0, x: -20 },
+                            visible: { opacity: 1, x: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
+                        }}
                         className="mt-4 border-l-2 border-fo-yellow/50 pl-5"
                     >
                         <h3 className="text-fo-yellow font-inter font-bold tracking-widest text-xs md:text-sm uppercase mb-3 drop-shadow-md">
                             THINGS YOU WISH YOU WERE TAUGHT IN SCHOOL.
                         </h3>
                         <p className="font-inter text-cool-gray leading-relaxed text-xs md:text-sm pr-4 md:pr-12">
-                            You don't get a certificate of participation in real life. Your school taught you how to run in the race, but not how to win. Stop seeking external validation, admit your shortcomings, and start creating. This is your practical blueprint for entrepreneurship and survival.
+                            You don&apos;t get a certificate of participation in real life. Your school taught you how to run in the race, but not how to win. Stop seeking external validation, admit your shortcomings, and start creating. This is your practical blueprint for entrepreneurship and survival.
                         </p>
                     </motion.div>
 
                     {/* Pricing & CTA */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        viewport={{ once: true }}
+                        variants={{
+                            hidden: { opacity: 0, y: 30 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
+                        }}
                         className="mt-6 flex flex-col sm:flex-row items-center gap-4"
                     >
                         {/* Tag & Price Badge */}
@@ -135,7 +159,7 @@ export default function BookSection() {
                     </motion.div>
                 </div>
 
-            </div>
+            </motion.div>
         </section>
     );
 }
