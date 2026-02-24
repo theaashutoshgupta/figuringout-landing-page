@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 
 const navLinks = [
@@ -17,25 +16,46 @@ const navLinks = [
 export default function NavigationHeader() {
     const pathname = usePathname();
     const [isExpanded, setIsExpanded] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
-
-            // Expand whenever we scroll past the top
             const shouldExpand = scrollY > 20;
-
             if (shouldExpand !== isExpanded) {
                 setIsExpanded(shouldExpand);
             }
         };
         window.addEventListener("scroll", handleScroll, { passive: true });
-        handleScroll(); // Initial check
+        handleScroll();
         return () => window.removeEventListener("scroll", handleScroll);
     }, [isExpanded]);
 
+    // Close mobile menu on resize to desktop
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 768) {
+                setMobileMenuOpen(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (mobileMenuOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [mobileMenuOpen]);
+
     return (
-        <header className="fixed top-8 left-0 right-0 z-50 flex px-6 md:px-12 pointer-events-none">
+        <header className="fixed top-4 sm:top-8 left-0 right-0 z-50 flex px-4 sm:px-6 md:px-12 pointer-events-none">
             <motion.div
                 layout
                 transition={{
@@ -45,26 +65,26 @@ export default function NavigationHeader() {
                     mass: 0.8
                 }}
                 className={clsx(
-                    "pointer-events-auto relative flex items-center justify-between px-8 py-4 border rounded-full",
+                    "pointer-events-auto relative flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4 border rounded-full",
                     isExpanded
                         ? "mx-auto w-full max-w-6xl bg-[#111]/80 backdrop-blur-[40px] border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]"
-                        : "mr-auto ml-0 w-auto min-w-max bg-[#111]/30 backdrop-blur-[20px] border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] gap-x-6"
+                        : "mr-auto ml-0 w-auto min-w-max bg-[#111]/30 backdrop-blur-[20px] border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] gap-x-4 sm:gap-x-6"
                 )}
             >
                 {/* Brand & Main Nav Combined on Left */}
-                <div className="flex items-center space-x-6 shrink-0 z-10">
-                    <Link href="/" className="flex items-center space-x-3 group min-w-max">
-                        <img src="/logo.ico" alt="Logo" className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" />
-                        <span className="font-poppins text-lg font-bold text-soft-white tracking-tight whitespace-nowrap drop-shadow-md">
+                <div className="flex items-center space-x-4 sm:space-x-6 shrink-0 z-10">
+                    <a href="#" onClick={(e) => e.preventDefault()} className="flex items-center space-x-2 sm:space-x-3 group min-w-max">
+                        <img src="/logo.ico" alt="Logo" className="w-7 h-7 sm:w-8 sm:h-8 group-hover:scale-110 transition-transform duration-300" />
+                        <span className="font-poppins text-base sm:text-lg font-bold text-soft-white tracking-tight whitespace-nowrap drop-shadow-md">
                             Figuring Out
                         </span>
-                    </Link>
+                    </a>
 
-                    {/* Vertical Divider */}
-                    <div className="w-px h-6 bg-white/20 shrink-0"></div>
+                    {/* Vertical Divider - Desktop only */}
+                    <div className="w-px h-6 bg-white/20 shrink-0 hidden md:block"></div>
 
-                    {/* Navigation Links */}
-                    <nav className="flex items-center space-x-6 xl:space-x-8 shrink-0">
+                    {/* Navigation Links - Desktop only */}
+                    <nav className="hidden md:flex items-center space-x-6 xl:space-x-8 shrink-0">
                         {navLinks.map((item) => (
                             <a
                                 key={item.name}
@@ -86,7 +106,77 @@ export default function NavigationHeader() {
                         ))}
                     </nav>
                 </div>
+
+                {/* Mobile Hamburger Button */}
+                <button
+                    type="button"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    className="md:hidden flex flex-col items-center justify-center w-8 h-8 gap-[5px] cursor-pointer relative z-50"
+                    aria-label="Toggle menu"
+                >
+                    <motion.span
+                        animate={{
+                            rotate: mobileMenuOpen ? 45 : 0,
+                            y: mobileMenuOpen ? 7 : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="block w-5 h-[2px] bg-soft-white origin-center"
+                    />
+                    <motion.span
+                        animate={{
+                            opacity: mobileMenuOpen ? 0 : 1,
+                        }}
+                        transition={{ duration: 0.2 }}
+                        className="block w-5 h-[2px] bg-soft-white"
+                    />
+                    <motion.span
+                        animate={{
+                            rotate: mobileMenuOpen ? -45 : 0,
+                            y: mobileMenuOpen ? -7 : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="block w-5 h-[2px] bg-soft-white origin-center"
+                    />
+                </button>
             </motion.div>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-40 bg-rich-black/95 backdrop-blur-xl pointer-events-auto md:hidden flex flex-col items-center justify-center"
+                    >
+                        <nav className="flex flex-col items-center space-y-8">
+                            {navLinks.map((item, index) => (
+                                <motion.a
+                                    key={item.name}
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setMobileMenuOpen(false);
+                                    }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ delay: index * 0.08, duration: 0.4 }}
+                                    className={clsx(
+                                        "text-2xl font-poppins font-semibold tracking-wide transition-colors duration-300",
+                                        pathname === item.href
+                                            ? "text-fo-yellow"
+                                            : "text-soft-white/80"
+                                    )}
+                                >
+                                    {item.name}
+                                </motion.a>
+                            ))}
+                        </nav>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     );
 }

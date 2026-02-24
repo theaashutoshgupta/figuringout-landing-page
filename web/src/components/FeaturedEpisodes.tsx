@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { Particles } from '@/components/ui/particles';
 
 const thumbnails = [
@@ -16,17 +17,71 @@ const thumbnails = [
 export default function FeaturedEpisodes() {
     const items = [...thumbnails, ...thumbnails]; // 14 items
     const totalItems = items.length;
-    const radius = 1000;
-    const itemWidth = 400; // 16:9 Youtube ratio horizontal format
-    const itemHeight = 225;
+
+    // Responsive carousel dimensions
+    const [carouselConfig, setCarouselConfig] = useState({
+        radius: 1000,
+        itemWidth: 400,
+        itemHeight: 225,
+        containerHeight: 400,
+        translateZ: 850,
+        particleCount: 150,
+    });
+
+    useEffect(() => {
+        const updateConfig = () => {
+            const w = window.innerWidth;
+            if (w < 480) {
+                setCarouselConfig({
+                    radius: 400,
+                    itemWidth: 200,
+                    itemHeight: 112,
+                    containerHeight: 220,
+                    translateZ: 340,
+                    particleCount: 50,
+                });
+            } else if (w < 768) {
+                setCarouselConfig({
+                    radius: 600,
+                    itemWidth: 280,
+                    itemHeight: 158,
+                    containerHeight: 280,
+                    translateZ: 520,
+                    particleCount: 80,
+                });
+            } else if (w < 1024) {
+                setCarouselConfig({
+                    radius: 800,
+                    itemWidth: 340,
+                    itemHeight: 191,
+                    containerHeight: 340,
+                    translateZ: 700,
+                    particleCount: 120,
+                });
+            } else {
+                setCarouselConfig({
+                    radius: 1000,
+                    itemWidth: 400,
+                    itemHeight: 225,
+                    containerHeight: 400,
+                    translateZ: 850,
+                    particleCount: 150,
+                });
+            }
+        };
+
+        updateConfig();
+        window.addEventListener('resize', updateConfig);
+        return () => window.removeEventListener('resize', updateConfig);
+    }, []);
 
     return (
-        <section className="relative w-full py-32 bg-rich-black overflow-hidden flex flex-col items-center">
+        <section className="relative w-full py-16 sm:py-24 md:py-32 bg-rich-black overflow-hidden flex flex-col items-center">
 
             {/* Interactive Particle Background */}
             <Particles
                 className="absolute inset-0 z-0 opacity-70"
-                quantity={150}
+                quantity={carouselConfig.particleCount}
                 ease={80}
                 color="#ffffff"
                 refresh
@@ -47,7 +102,7 @@ export default function FeaturedEpisodes() {
                         }
                     }
                 }}
-                className="w-full max-w-7xl px-6 md:px-12 flex flex-col md:flex-row justify-between items-end mb-16 space-y-6 md:space-y-0 relative z-10"
+                className="w-full max-w-7xl px-4 sm:px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 md:mb-16 space-y-4 md:space-y-0 relative z-10"
             >
                 <div className="flex flex-col">
                     <motion.div
@@ -57,7 +112,7 @@ export default function FeaturedEpisodes() {
                         }}
                         className="overflow-hidden pb-1"
                     >
-                        <h2 className="font-poppins text-5xl md:text-6xl font-black text-soft-white leading-tight tracking-tight">
+                        <h2 className="font-poppins text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-soft-white leading-tight tracking-tight">
                             Featured
                         </h2>
                     </motion.div>
@@ -67,7 +122,7 @@ export default function FeaturedEpisodes() {
                             visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
                         }}
                     >
-                        <span className="font-playfair text-5xl md:text-6xl font-bold italic text-fo-yellow leading-none -mt-2 block">
+                        <span className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold italic text-fo-yellow leading-none -mt-2 block">
                             Episodes
                         </span>
                     </motion.div>
@@ -77,7 +132,7 @@ export default function FeaturedEpisodes() {
                         hidden: { opacity: 0, x: 20 },
                         visible: { opacity: 1, x: 0, transition: { duration: 1, ease: [0.165, 0.84, 0.44, 1] } }
                     }}
-                    className="font-inter text-cool-gray text-lg max-w-sm md:text-right"
+                    className="font-inter text-cool-gray text-sm sm:text-base md:text-lg max-w-sm md:text-right"
                 >
                     Our most popular podcasts with high profile guests
                 </motion.p>
@@ -85,31 +140,30 @@ export default function FeaturedEpisodes() {
 
             {/* 3D Curved Carousel Container */}
             <div
-                className="relative w-full py-20 flex justify-center items-center overflow-hidden"
+                className="relative w-full py-8 sm:py-12 md:py-20 flex justify-center items-center overflow-hidden"
                 style={{
                     perspective: '1200px',
-                    height: '400px', // Creates vertical space for the 3D perspective distortion (taller on sides)
-                    WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
-                    maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)'
+                    height: `${carouselConfig.containerHeight}px`,
+                    WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+                    maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
                 }}
             >
-                {/* Perspective Wrapper pulling the entire cylinder towards the camera to heavily magnify the edges */}
+                {/* Perspective Wrapper */}
                 <div
                     className="relative flex justify-center items-center w-full h-full"
                     style={{
                         transformStyle: 'preserve-3d',
-                        transform: 'translateZ(850px)'
+                        transform: `translateZ(${carouselConfig.translateZ}px)`
                     }}
                 >
                     <motion.div
-                        className="relative flex justify-center items-center w-full h-full"
+                        className="relative flex justify-center items-center w-full h-full will-change-transform"
                         style={{ transformStyle: 'preserve-3d' }}
-                        // Rotates the entire 14-item cylinder infinitely
                         animate={{ rotateY: [0, 360] }}
                         transition={{
                             repeat: Infinity,
                             repeatType: "loop",
-                            duration: 60, // Elegant, unhurried pace
+                            duration: 60,
                             ease: "linear",
                         }}
                     >
@@ -120,16 +174,13 @@ export default function FeaturedEpisodes() {
                                     key={index}
                                     className="absolute shrink-0 group cursor-pointer"
                                     style={{
-                                        width: `${itemWidth}px`,
-                                        height: `${itemHeight}px`,
-                                        // Places items around the rim of the cylinder
-                                        // translateZ(-radius) ensures we are looking at the BACK concave wall facing us
-                                        transform: `rotateY(${angle}deg) translateZ(${-radius}px)`,
-                                        // Hides all items that rotate toward the invisible front-half of the cylinder
+                                        width: `${carouselConfig.itemWidth}px`,
+                                        height: `${carouselConfig.itemHeight}px`,
+                                        transform: `rotateY(${angle}deg) translateZ(${-carouselConfig.radius}px)`,
                                         backfaceVisibility: 'hidden',
                                     }}
                                 >
-                                    <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl relative">
+                                    <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl relative">
                                         <img
                                             src={src}
                                             alt={`Podcast Episode Thumbnail ${index + 1}`}
@@ -145,8 +196,8 @@ export default function FeaturedEpisodes() {
             </div>
 
             {/* Scroll indicator */}
-            <div className="mt-16 flex flex-col items-center space-y-3 opacity-60 hover:opacity-100 transition-opacity duration-300">
-                <span className="font-inter text-sm text-soft-white tracking-widest uppercase">
+            <div className="mt-8 sm:mt-12 md:mt-16 flex flex-col items-center space-y-3 opacity-60 hover:opacity-100 transition-opacity duration-300">
+                <span className="font-inter text-xs sm:text-sm text-soft-white tracking-widest uppercase">
                     Scroll to know more
                 </span>
                 <motion.div

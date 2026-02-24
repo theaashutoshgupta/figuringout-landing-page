@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function Footer() {
@@ -12,9 +11,20 @@ export default function Footer() {
         visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easeOutQuart } }
     };
 
+    // Inert link component — looks like a link but does nothing
+    const InertLink = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+        <a
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            className={className}
+        >
+            {children}
+        </a>
+    );
+
     return (
-        <footer className="w-full bg-[#111111] text-white pt-20 pb-10 overflow-hidden">
-            <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
+        <footer className="w-full bg-[#111111] text-white pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 overflow-hidden">
+            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Top Section - 5 Columns */}
                 <motion.div
                     initial="hidden"
@@ -42,30 +52,30 @@ export default function Footer() {
 
                     {/* Column 2 - Links */}
                     <motion.div variants={columnVariants} className="flex flex-col gap-3">
-                        <Link href="/podcast" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">PODCAST</Link>
-                        <Link href="/search" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">SEARCH</Link>
-                        <Link href="/contact" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">GUEST SUGGESTION</Link>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">PODCAST</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">SEARCH</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">GUEST SUGGESTION</InertLink>
                     </motion.div>
 
                     {/* Column 3 - Links */}
                     <motion.div variants={columnVariants} className="flex flex-col gap-3">
-                        <Link href="/about" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">ABOUT</Link>
-                        <Link href="/about#team" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">TEAM</Link>
-                        <Link href="/careers" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">CAREERS</Link>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">ABOUT</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">TEAM</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">CAREERS</InertLink>
                     </motion.div>
 
                     {/* Column 4 - Links */}
                     <motion.div variants={columnVariants} className="flex flex-col gap-3">
-                        <Link href="/sponsors" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">SPONSORS</Link>
-                        <Link href="/faq" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">FAQ</Link>
-                        <Link href="/contact" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">CONTACT US</Link>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">SPONSORS</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">FAQ</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">CONTACT US</InertLink>
                     </motion.div>
 
                     {/* Column 5 - Links */}
                     <motion.div variants={columnVariants} className="flex flex-col gap-3">
-                        <Link href="/legal/privacy" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">PRIVACY POLICY</Link>
-                        <Link href="/legal/terms" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">TERMS OF SERVICE</Link>
-                        <Link href="/legal/cookies" className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">COOKIE POLICY</Link>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">PRIVACY POLICY</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">TERMS OF SERVICE</InertLink>
+                        <InertLink className="text-xs font-inter tracking-widest text-gray-300 hover:text-white uppercase transition-colors">COOKIE POLICY</InertLink>
                     </motion.div>
                 </motion.div>
 

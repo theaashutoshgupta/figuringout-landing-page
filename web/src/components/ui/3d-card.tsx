@@ -85,10 +85,10 @@ export const InteractiveTravelCard = React.forwardRef<
       >
         <div
           style={{
-            transform: "translateZ(50px)",
+            transform: "translateZ(30px)",
             transformStyle: "preserve-3d",
           }}
-          className="absolute inset-4 grid h-[calc(100%-2rem)] w-[calc(100%-2rem)] grid-rows-[1fr_auto] rounded-xl shadow-lg"
+          className="absolute inset-2 sm:inset-4 grid h-[calc(100%-1rem)] sm:h-[calc(100%-2rem)] w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] grid-rows-[1fr_auto] rounded-xl shadow-lg"
         >
           {/* Background Image */}
           <img
@@ -101,20 +101,20 @@ export const InteractiveTravelCard = React.forwardRef<
           <div className="absolute inset-0 h-full w-full rounded-xl bg-gradient-to-b from-black/20 via-transparent to-black/80" />
 
           {/* Card Content (Header & Footer) */}
-          <div className="relative flex flex-col justify-between rounded-xl p-4 text-white">
+          <div className="relative flex flex-col justify-between rounded-xl p-2 sm:p-4 text-white">
 
             {/* Header section with text and link */}
             <div className="flex items-start justify-between">
               <div>
                 <motion.h2
-                  style={{ transform: "translateZ(50px)" }}
-                  className="text-2xl font-bold font-poppins"
+                  style={{ transform: "translateZ(30px)" }}
+                  className="text-base sm:text-lg md:text-2xl font-bold font-poppins"
                 >
                   {title}
                 </motion.h2>
                 <motion.p
-                  style={{ transform: "translateZ(40px)" }}
-                  className="text-sm font-light text-white/80 font-inter tracking-wide uppercase"
+                  style={{ transform: "translateZ(20px)" }}
+                  className="text-[10px] sm:text-xs md:text-sm font-light text-white/80 font-inter tracking-wide uppercase"
                 >
                   {subtitle}
                 </motion.p>
@@ -130,14 +130,14 @@ export const InteractiveTravelCard = React.forwardRef<
                 pointerEvents: isHovered ? "auto" : "none"
               }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              style={{ transform: "translateZ(40px)" }}
+              style={{ transform: "translateZ(20px)" }}
             >
               <motion.button
                 onClick={onActionClick}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className={cn(
-                  "w-full rounded-lg py-3 text-center font-bold text-rich-black uppercase tracking-widest",
+                  "w-full rounded-lg py-2 sm:py-3 text-center text-xs sm:text-sm font-bold text-rich-black uppercase tracking-widest",
                   // Glassmorphism styling logic
                   "bg-fo-yellow hover:bg-fo-yellow/90 shadow-lg"
                 )}

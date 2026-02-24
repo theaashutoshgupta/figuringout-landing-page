@@ -1,11 +1,22 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Particles } from "./ui/particles";
 
 export default function AboutIntro() {
     const containerRef = useRef<HTMLDivElement>(null);
+
+    // Responsive particle count
+    const [particleCount, setParticleCount] = useState(150);
+    useEffect(() => {
+        const update = () => {
+            setParticleCount(window.innerWidth < 768 ? 60 : 150);
+        };
+        update();
+        window.addEventListener('resize', update);
+        return () => window.removeEventListener('resize', update);
+    }, []);
 
     // Mouse tracking for 3D parallax effect
     const mouseX = useMotionValue(0);
@@ -43,13 +54,13 @@ export default function AboutIntro() {
             <div className="absolute inset-0 w-full h-full z-0 flex justify-center items-end pointer-events-none">
                 {/* Interactive Particle Background */}
                 <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-auto">
-                    <Particles quantity={150} staticity={30} ease={50} color="#ffffff" className="w-full h-full" />
+                    <Particles quantity={particleCount} staticity={30} ease={50} color="#ffffff" className="w-full h-full" />
                 </div>
 
                 {/* Brand Yellow Premium Glow - Intensified */}
                 <motion.div
                     style={{ x: subjectX, y: subjectY }}
-                    className="absolute bottom-10 w-[80vw] md:w-[60vw] h-[70vh] bg-fo-yellow opacity-25 blur-[160px] md:blur-[200px] rounded-full pointer-events-none z-0"
+                    className="absolute bottom-10 w-[90vw] sm:w-[80vw] md:w-[60vw] h-[50vh] sm:h-[60vh] md:h-[70vh] bg-fo-yellow opacity-25 blur-[100px] sm:blur-[160px] md:blur-[200px] rounded-full pointer-events-none z-0"
                 ></motion.div>
 
                 <motion.div
@@ -63,7 +74,7 @@ export default function AboutIntro() {
                         viewport={{ once: true }}
                         src="/foundernobg.png"
                         alt="Raj Shamani"
-                        className="w-full h-full object-cover object-center select-none"
+                        className="w-full h-full object-cover object-center select-none will-change-transform"
                     />
                 </motion.div>
 
@@ -72,33 +83,36 @@ export default function AboutIntro() {
             </div>
 
             {/* Content Container */}
-            <div className="w-full max-w-[1400px] mx-auto px-6 xl:px-0 relative z-20 min-h-screen flex flex-col justify-between pt-24 pb-16 md:py-24 pointer-events-none">
+            <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 xl:px-0 relative z-20 min-h-screen flex flex-col justify-between pt-20 sm:pt-24 pb-12 sm:pb-16 md:py-24 pointer-events-none">
 
-                {/* Absolute Top Left - "About Figuring Out" Title */}
+                {/* Top Left - "About Figuring Out" Title */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
                     viewport={{ once: true }}
-                    className="absolute top-12 md:top-32 left-6 xl:left-0 text-left pointer-events-none z-30"
+                    className="text-left pointer-events-none z-30 relative sm:absolute sm:top-12 md:top-32 sm:left-6 xl:left-0"
                 >
-                    <h2 className="font-poppins text-soft-white text-3xl md:text-4xl lg:text-5xl font-normal uppercase tracking-[0.2em] mb-2 drop-shadow-lg text-fo-yellow">
+                    <h2 className="font-poppins text-soft-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-1 sm:mb-2 drop-shadow-lg text-fo-yellow">
                         About
                     </h2>
-                    <h3 className="font-playfair text-fo-yellow text-5xl md:text-6xl lg:text-7xl font-bold italic drop-shadow-xl -mt-2">
+                    <h3 className="font-playfair text-fo-yellow text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold italic drop-shadow-xl -mt-1 sm:-mt-2">
                         Figuring Out
                     </h3>
                 </motion.div>
 
-                {/* Absolute Bottom Right - Paragraph - Shisted further left for visibility */}
+                {/* Spacer for mobile to push paragraph down */}
+                <div className="flex-1" />
+
+                {/* Bottom - Paragraph */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     viewport={{ once: true }}
-                    className="absolute bottom-12 md:bottom-24 right-12 md:right-24 xl:right-16 max-w-xs md:max-w-sm pointer-events-auto z-30 text-right"
+                    className="pointer-events-auto z-30 text-left sm:text-right sm:absolute sm:bottom-12 md:bottom-24 sm:right-12 md:right-24 xl:right-16 max-w-xs sm:max-w-sm self-start sm:self-auto"
                 >
-                    <p className="font-inter text-cool-gray/90 text-[10px] md:text-xs leading-relaxed md:leading-loose tracking-widest uppercase drop-shadow-md">
+                    <p className="font-inter text-cool-gray/90 text-[11px] sm:text-[10px] md:text-xs leading-relaxed sm:leading-relaxed md:leading-loose tracking-widest uppercase drop-shadow-md">
                         Figuring Out is an entrepreneur, content creator, and motivational speaker known for the popular podcast where inspiring conversations with successful entrepreneurs, business leaders, and industry experts are shared.
                         <br /><br />
                         Through this content, practical insights on entrepreneurship, business strategies, personal development, and career growth are provided, helping millions build their path to success.
