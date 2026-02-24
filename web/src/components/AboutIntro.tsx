@@ -90,7 +90,7 @@ export default function AboutIntro() {
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
-                    className="text-left pointer-events-none z-30 relative lg:absolute lg:top-32 xl:left-0 mb-8 lg:mb-0"
+                    className="text-left pointer-events-none z-30 relative mb-8 lg:mb-0 pl-4 sm:pl-8 md:pl-16 lg:pl-24 xl:pl-32 self-start"
                 >
                     <h2 className="font-poppins text-soft-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal uppercase tracking-[0.15em] sm:tracking-[0.2em] mb-1 sm:mb-2 drop-shadow-lg text-fo-yellow">
                         About
@@ -109,9 +109,9 @@ export default function AboutIntro() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     viewport={{ once: true }}
-                    className="pointer-events-auto z-30 text-left sm:text-right lg:absolute lg:bottom-24 lg:right-24 xl:right-16 max-w-xs sm:max-w-sm md:max-w-md self-start sm:self-end mt-8 lg:mt-0"
+                    className="pointer-events-auto z-30 text-left sm:text-right lg:text-left w-full sm:w-2/3 lg:w-[45%] lg:absolute lg:bottom-16 xl:bottom-20 lg:right-12 xl:right-0 ml-auto self-end mt-8 lg:mt-0 pr-4 sm:pr-8 md:pr-16 lg:pr-0"
                 >
-                    <p className="font-inter text-cool-gray/90 text-[11px] sm:text-[10px] md:text-sm lg:text-xs leading-relaxed sm:leading-relaxed md:leading-loose tracking-widest uppercase drop-shadow-md">
+                    <p className="font-inter text-cool-gray/90 text-[10px] sm:text-[9px] md:text-sm lg:text-[13px] leading-relaxed sm:leading-relaxed md:leading-loose lg:leading-loose tracking-widest uppercase drop-shadow-md">
                         Figuring Out is an entrepreneur, content creator, and motivational speaker known for the popular podcast where inspiring conversations with successful entrepreneurs, business leaders, and industry experts are shared.
                         <br /><br />
                         Through this content, practical insights on entrepreneurship, business strategies, personal development, and career growth are provided, helping millions build their path to success.
