@@ -58,7 +58,7 @@ export default function HeroSection() {
                 <img
                     src="/founderwithgates.png"
                     alt="Figuring Out Hero"
-                    className="absolute inset-0 w-full h-full object-cover object-[88%_center] md:object-right"
+                    className="absolute inset-0 w-full h-full object-cover object-[80%_center] sm:object-[82%_center] md:object-right"
                 />
             </motion.div>
 

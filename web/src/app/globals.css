@@ -41,7 +41,9 @@ body {
 }
 
 /* Prevent horizontal overflow on any level */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   max-width: 100vw;
 }
 
@@ -56,7 +58,10 @@ main {
 
 /* Respect user preference for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -65,7 +70,8 @@ main {
 }
 
 /* Ensure touch targets are large enough per ui-ux skill guideline (44x44px minimum) */
-a, button {
+a,
+button {
   min-height: 44px;
   min-width: 44px;
 }

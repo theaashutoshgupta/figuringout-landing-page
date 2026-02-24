@@ -48,7 +48,7 @@ export default function BookSection() {
             >
 
                 {/* Left Content */}
-                <div className="flex flex-col gap-4 sm:gap-5 max-w-xl">
+                <div className="flex flex-col gap-4 sm:gap-5 max-w-xl pl-2 sm:pl-6 md:pl-10 lg:pl-16">
                     <div className="flex flex-col gap-1">
                         <motion.p
                             variants={{

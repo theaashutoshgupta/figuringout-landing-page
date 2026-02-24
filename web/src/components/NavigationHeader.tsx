@@ -55,20 +55,19 @@ export default function NavigationHeader() {
     }, [mobileMenuOpen]);
 
     return (
-        <header className="fixed top-4 sm:top-8 left-0 right-0 z-50 flex px-4 sm:px-6 md:px-12 pointer-events-none">
+        <header className="fixed top-4 sm:top-8 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 md:px-12 pointer-events-none">
             <motion.div
                 layout
                 transition={{
                     type: "spring",
-                    stiffness: 200,
+                    stiffness: 300,
                     damping: 30,
-                    mass: 0.8
                 }}
                 className={clsx(
-                    "pointer-events-auto relative flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4 border rounded-full",
+                    "pointer-events-auto relative flex items-center justify-between px-5 sm:px-8 py-3 w-full max-w-6xl border rounded-full transition-all duration-300",
                     isExpanded
-                        ? "mx-auto w-full max-w-6xl bg-[#111]/80 backdrop-blur-[40px] border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]"
-                        : "mr-auto ml-0 w-auto min-w-max bg-[#111]/30 backdrop-blur-[20px] border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] gap-x-4 sm:gap-x-6"
+                        ? "bg-[#111]/80 backdrop-blur-[40px] border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.6)]"
+                        : "lg:max-w-fit bg-[#111]/30 backdrop-blur-[20px] border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] gap-x-4 sm:gap-x-6"
                 )}
             >
                 {/* Brand & Main Nav Combined on Left */}
@@ -150,6 +149,16 @@ export default function NavigationHeader() {
                         transition={{ duration: 0.3 }}
                         className="fixed inset-0 z-40 bg-rich-black/95 backdrop-blur-xl pointer-events-auto md:hidden flex flex-col items-center justify-center"
                     >
+                        {/* Mobile Menu Back Button */}
+                        <button
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-soft-white rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                        >
+                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
                         <nav className="flex flex-col items-center space-y-8">
                             {navLinks.map((item, index) => (
                                 <motion.a
